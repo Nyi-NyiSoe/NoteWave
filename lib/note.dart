@@ -7,5 +7,6 @@ class Note {
   final String title;
   @HiveField(1)
   final String body;
+
   Note({required this.body, required this.title});
 }

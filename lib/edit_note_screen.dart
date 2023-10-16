@@ -6,7 +6,8 @@ import 'note_service.dart';
 class EditNoteScreen extends StatefulWidget {
   final Note? noteObj;
   final int? index;
-  EditNoteScreen({Key? key, this.noteObj, this.index});
+  final String? appBarTitle;
+  EditNoteScreen({Key? key, this.noteObj, this.index,required this.appBarTitle});
 
   @override
   State<EditNoteScreen> createState() => _EditNoteScreenState();
@@ -33,7 +34,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Notes'),
+        title:  Text(widget.appBarTitle!),
         actions: [
           IconButton(
               onPressed: () {
@@ -46,7 +47,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                   var note = Note(
                       body: _bodyController.text, title: _titleController.text);
                   _noteService.addNote(note);
-                   ScaffoldMessenger.of(context)
+                  ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text('Added new')));
                 }
               },
