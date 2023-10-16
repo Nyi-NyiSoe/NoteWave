@@ -12,14 +12,18 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Random random = Random();
+    final List<Color> backgroundColors = [
+      Colors.red,
+      Colors.green,
+      Colors.blue,
+      Colors.yellow,
+      Colors.orange,
+      Colors.purple,
+    ];
+
     Color _randomColor() {
-      return Color.fromRGBO(
-        random.nextInt(200),
-        random.nextInt(200),
-        random.nextInt(200),
-        1.0,
-      );
+      final Random random = Random();
+      return backgroundColors[random.nextInt(backgroundColors.length)];
     }
 
     return SafeArea(
@@ -48,6 +52,13 @@ class HomePage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         var note = box.getAt(index);
                         return GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditNoteScreen(
+                                        noteObj: note,
+                                        index: index,
+                                      ))),
                           onLongPress: () async {
                             return showDialog(
                                 context: context,
@@ -62,16 +73,28 @@ class HomePage extends StatelessWidget {
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
                                             Text(note.title),
-                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              IconButton(onPressed: (){}, icon: const Icon(Icons.edit)),
-                                              IconButton(
-                                                style: ButtonStyle(),
-                                                onPressed: (){}, icon: const Icon(Icons.delete,color: Colors.red,))
-                                            ],
-                                           )
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {},
+                                                    icon:
+                                                        const Icon(Icons.edit)),
+                                                IconButton(
+                                                    style: ButtonStyle(),
+                                                    onPressed: () {
+                                                      _noteService
+                                                          .deleteNote(index);
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.delete,
+                                                      color: Colors.red,
+                                                    ))
+                                              ],
+                                            )
                                           ]),
                                     ),
                                   );
@@ -85,13 +108,13 @@ class HomePage extends StatelessWidget {
                                 Center(
                                   child: Text(
                                     note!.title,
-                                    style: TextStyle(fontSize: 20),
+                                    style: const TextStyle(fontSize: 20),
                                   ),
                                 ),
                                 Text(
                                   note.body,
                                   maxLines: 5,
-                                  style: TextStyle(fontSize: 15),
+                                  style: const TextStyle(fontSize: 15),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ],

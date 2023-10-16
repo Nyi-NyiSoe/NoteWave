@@ -3,12 +3,30 @@ import 'package:notewave/note.dart';
 
 import 'note_service.dart';
 
-class EditNoteScreen extends StatelessWidget {
-  EditNoteScreen({super.key});
+class EditNoteScreen extends StatefulWidget {
+  final Note? noteObj;
+  final int? index;
+  EditNoteScreen({Key? key, this.noteObj, this.index});
 
+  @override
+  State<EditNoteScreen> createState() => _EditNoteScreenState();
+}
+
+class _EditNoteScreenState extends State<EditNoteScreen> {
   final NoteService _noteService = NoteService();
+
   TextEditingController _titleController = TextEditingController();
+
   TextEditingController _bodyController = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.noteObj != null) {
+      _titleController = TextEditingController(text: widget.noteObj!.title);
+      _bodyController = TextEditingController(text: widget.noteObj!.body);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +37,14 @@ class EditNoteScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                var note = Note(
-                    body: _bodyController.text, title: _titleController.text);
-                _noteService.addNote(note);
+                if (widget.noteObj != null) {
+                  _noteService.updateNote(widget.index!, _titleController.text,
+                      _bodyController.text);
+                } else {
+                  var note = Note(
+                      body: _bodyController.text, title: _titleController.text);
+                  _noteService.addNote(note);
+                }
               },
               icon: const Icon(Icons.save))
         ],

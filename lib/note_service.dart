@@ -20,9 +20,11 @@ class NoteService {
     box.deleteAt(index);
   }
 
-  Future<void> updateNote(int index, Note note) async {
+  Future<void> updateNote(int index, String title, String body) async {
     var box = await _box;
-    box.putAt(index, note);
+
+    box.putAt(index, Note(body: body, title: title));
+   
   }
   
 }
