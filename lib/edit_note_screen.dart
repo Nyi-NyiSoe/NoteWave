@@ -40,10 +40,14 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                 if (widget.noteObj != null) {
                   _noteService.updateNote(widget.index!, _titleController.text,
                       _bodyController.text);
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('Saved')));
                 } else {
                   var note = Note(
                       body: _bodyController.text, title: _titleController.text);
                   _noteService.addNote(note);
+                   ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('Added new')));
                 }
               },
               icon: const Icon(Icons.save))
