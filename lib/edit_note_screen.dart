@@ -7,7 +7,7 @@ class EditNoteScreen extends StatefulWidget {
   final Note? noteObj;
   final int? index;
   final String? appBarTitle;
-  EditNoteScreen({Key? key, this.noteObj, this.index,required this.appBarTitle});
+  const EditNoteScreen({Key? key, this.noteObj, this.index,required this.appBarTitle});
 
   @override
   State<EditNoteScreen> createState() => _EditNoteScreenState();
@@ -42,13 +42,13 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                   _noteService.updateNote(widget.index!, _titleController.text,
                       _bodyController.text);
                   ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Saved')));
+                      .showSnackBar(const SnackBar(content: Text('Saved')));
                 } else {
                   var note = Note(
                       body: _bodyController.text, title: _titleController.text);
                   _noteService.addNote(note);
                   ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Added new')));
+                      .showSnackBar(const SnackBar(content: Text('Added new')));
                 }
               },
               icon: const Icon(Icons.save))
@@ -71,7 +71,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                 controller: _bodyController,
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Type something here..',
                     hintStyle: TextStyle(fontSize: 20)),

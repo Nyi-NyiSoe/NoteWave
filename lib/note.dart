@@ -10,3 +10,4 @@ class Note {
 
   Note({required this.body, required this.title});
 }
+

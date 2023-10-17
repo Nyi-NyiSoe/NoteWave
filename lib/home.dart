@@ -13,29 +13,21 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Color> backgroundColors = [
-      Color(0xFFE0E0E0), // Lighter Gray
-      Color(0xFFB0C4DE), // Light Steel Blue
-      Color(0xFFFFC0CB), // Pink
-      Color(0xFFD8BFD8), // Thistle
-      Color(0xFFC1FFC1), // Light Green
-      Color(0xFFFFE4B5), // Moccasin
-      Color(0xFFFFFFE0), // Light Yellow
-      Color(0xFFB0E0E6), // Powder Blue
-      Color(0xFFF5E6E6), // Misty Rose
-      Color(0xFFFFF5E6), // Old Lace
+      const Color(0xFFE0E0E0), // Lighter Gray
+      const Color(0xFFB0C4DE), // Light Steel Blue
+      const Color(0xFFFFC0CB), // Pink
+      const Color(0xFFD8BFD8), // Thistle
+      const Color(0xFFC1FFC1), // Light Green
+      const Color(0xFFFFE4B5), // Moccasin
+      const Color(0xFFFFFFE0), // Light Yellow
+      const Color(0xFFB0E0E6), // Powder Blue
+      const Color(0xFFF5E6E6), // Misty Rose
+      const Color(0xFFFFF5E6), // Old Lace
     ];
 
-    Color _randomColor() {
+    Color randomColor() {
       final Random random = Random();
       return backgroundColors[random.nextInt(backgroundColors.length)];
-    }
-
-    bool isLargeScreen() {
-      if (MediaQuery.of(context).size.width > 600) {
-        return true;
-      } else {
-        return false;
-      }
     }
 
     return SafeArea(
@@ -46,15 +38,15 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: ((context) => EditNoteScreen(
+                        builder: ((context) => const EditNoteScreen(
                               appBarTitle: 'Add new note',
                             ))));
               },
               child: const Icon(Icons.add),
             ),
             appBar: AppBar(
-              backgroundColor: Color(0xFF4CAF50),
-              title: Text('NoteWave'),
+              backgroundColor: const Color(0xFF4CAF50),
+              title: const Text('NoteWave'),
             ),
             body: ValueListenableBuilder(
                 valueListenable: Hive.box<Note>('noteBox').listenable(),
@@ -85,7 +77,7 @@ class HomePage extends StatelessWidget {
                                     builder: (context) {
                                       return Dialog(
                                         elevation: 4,
-                                        child: Container(
+                                        child: SizedBox(
                                           width: 50,
                                           height: 100,
                                           child: Column(
@@ -119,7 +111,6 @@ class HomePage extends StatelessWidget {
                                                         icon: const Icon(
                                                             Icons.edit)),
                                                     IconButton(
-                                                        style: ButtonStyle(),
                                                         onPressed: () {
                                                           _noteService
                                                               .deleteNote(
@@ -139,7 +130,7 @@ class HomePage extends StatelessWidget {
                                     });
                               },
                               child: Card(
-                                color: _randomColor(),
+                                color: randomColor(),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
